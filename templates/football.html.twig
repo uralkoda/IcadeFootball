@@ -1,0 +1,61 @@
+{% extends 'root.html.twig' %}
+{% block title %}football stats{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('football') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('football') }}
+{% endblock %}
+{% block content %}
+
+
+        <section class="container-fluid bg-light mt-3 py-3">
+            <div class="container">
+                <div class="row">
+                    <div id="wg-api-football-fixture"
+                         data-host="v3.football.api-sports.io"
+                         data-refresh="600"
+                         data-id="732123"
+                         data-key="818dd340b69be75b28c9d8456edacfc0"
+                         data-theme=""
+                         data-show-errors="false"
+                         class="api_football_loader">
+                    </div>
+
+                    <div class="scoreboard">
+                        <h2 class=""> HEAD TO HEAD</h2>
+                        {% for match in headToHeads %}
+                            <div class="scoreboard__container">
+                            <div class="scoreboard__basics mb-05">
+                            </div>
+                            <div class="scoreboard__teams">
+                                <div class="scoreboard__team scoreboard__team--align-right mr-2">
+                                    <div class="scoreboard__badge ml-1">
+                                        <img src="{{ match.getTeamsHomeLogo }}" alt="Manchester United"/>
+                                    </div>
+                                    <span class="scoreboard__name">{{ match.getTeamsHomeName }}</span>
+                                </div>
+                                <div class="scoreboard__result">
+                                    <span class="scoreboard__result-home">{{ match.getGoalsHome }}</span>
+                                    <span class="scoreboard__result-separator">:</span>
+                                    <span class="scoreboard__result-home">{{ match.getGoalsHome }}</span>
+                                </div>
+                                <div class="scoreboard__team scoreboard__team--align-left ml-2">
+                                    <div class="scoreboard__badge mr-1">
+                                        <img src="{{ match.getTeamsAwayLogo }}" alt="Liverpool" />
+                                    </div>
+                                    <span class="scoreboard__name">{{ match.getTeamsAwayName }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    <script
+            type="module"
+            src="https://widgets.api-sports.io/football/1.1.8/widget.js">
+    </script>
+{% endblock %}

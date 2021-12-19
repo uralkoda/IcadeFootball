@@ -1,0 +1,105 @@
+{% extends 'root.html.twig' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    const AUTO_COMPLETE_DATA = {{ matches|json_encode|raw}};
+</script>
+    {{ encore_entry_script_tags('dashboard') }}
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <section>
+            <h1 class="mt-3 pb-2 pt-2">Welcome!</h1>
+            <select class="js-example-basic-single" name="state">
+            </select>
+        </section>
+
+        <section class="py-3">
+            <h1 class="fs-3">The API don't offer French League match results for that I just  used an available api for live matches results</h1>
+
+
+
+            <section class="card-container d-flex list-group flex-nowrap  pb-1">
+
+
+                {% for match in matches %}
+                    <div class="container list-group-item list-group-item-action mt-3">
+                    <!-- code here -->
+                    <div class="match">
+                        <div class="match-header">
+                            <div class="match-status">Live</div>
+                            <div class="match-tournament"><img src="{{ match.getLeagueLogo }}" />{{ match.getLeagueName }}</div>
+                            <div class="match-actions">
+                                <div class="match-tournament"><img src="{{ match.getLeagueFlag }}" />{{ match.getLeagueCountry }}</div>
+                            </div>
+                        </div>
+
+                        <div class="match-content">
+                            <div class="column">
+                                <div class="team team--home">
+                                    <div class="team-logo">
+                                        <img src="{{ match.getTeamsHomeLogo }}" />
+                                    </div>
+                                    <h2 class="team-name">{{ match.getTeamsHomeName }}</h2>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="match-details">
+                                    <div class="match-date">
+                                        {{ match.getFixtureDate|date("m/d/Y")}}
+                                    </div>
+                                    <div class="match-score">
+                                        <span class="match-score-number match-score-number--leading">{{ match.getGoalsHome }}</span>
+                                        <span class="match-score-divider">:</span>
+                                        <span class="match-score-number">{{ match.getGoalsAway }}</span>
+                                    </div>
+                                    <div class="match-time-lapsed">
+                                        {{ match.getFixtureTimestamp | ago }}'
+                                    </div>
+                                    <div class="match-referee">
+                                      {{ match.getLeagueRound }} {{ match.getLeagueSeason }}
+                                        <div>
+                                            <strong>{{ match.getFixtureVenueName }}</strong>
+                                        </div>
+                                    </div>
+                                    <a class="match-bet-place" href="/football/{{ match.getFixtureId }}?homeid={{ match.getTeamsHomeId }}&awayid={{ match.getTeamsAwayId }}">
+                                        <p style="font-size: 1em; font-weight: bold;" class="card-text">See Statatistic</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="team team--away">
+                                    <div class="team-logo">
+                                        <img src="{{ match.getTeamsAwayLogo }}" />
+                                    </div>
+                                    <h2 class="team-name">{{ match.getTeamsAwayName }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+
+    {{ encore_entry_script_tags('dashboard') }}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('search') }}
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            'use strict';
+            console.log('dashboard')
+        })
+    </script>
+{% endblock %}

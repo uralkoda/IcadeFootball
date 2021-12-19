@@ -1,0 +1,26 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+dashboard:
+  path: /dashboard
+  methods: GET
+  controller: App\Controller\FootballController::dashboard
+
+movie:
+  path: /football/{id}
+  methods: GET
+  controller: App\Controller\FootballController::show
+
+search:
+  path: /search/movie
+  methods: GET
+  controller: App\Controller\FootballController::getMatch
+
+app_register:
+  path: /register
+  controller: App\Controller\RegistrationController::register
+
+app_login:
+  path: /login
+  controller: App\Controller\SecurityController::login
